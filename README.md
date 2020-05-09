@@ -1,10 +1,20 @@
 # SpringSecurity_CRUD
 SpringSecurity with CRUD operation and Services 
 
-chmiel.tk:8080/spring/showMyLoginPage
-Login as administrator using : 
+Istnieje kilka poziomow uprawinien: udostepniam dwa :
+
+Kucharz:
+managerx
+damxA@123s
+
+Admin:
 Login: mary
 Password: fun123
+
+
+chmiel.tk:8080/spring/showMyLoginPage
+Login as administrator using : 
+
 
 Hi, this is my application for restaraurant services.
 I would like to show you project based on 
