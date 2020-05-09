@@ -1,5 +1,5 @@
 
-Istnieje kilka poziomow uprawinien: udostepniam dwa :
+App have account based on priviliges, I'm sharing two of them
 
 Kucharz:
 managerx
