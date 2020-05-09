@@ -22,51 +22,45 @@ import springsecurity.demo.user.Skladniki;
 @Controller
 @RequestMapping("/przepis")
 public class Recipte {
-	
-	protected final Logger log = Logger.getLogger(getClass().getName());
-	
-	
-	@Autowired 
-	PizzaRecipteService pizzaRecipteService;
-	
-	
-	@RequestMapping(value = "/receptura" , method = RequestMethod.GET )
-	String Przepis(Model theModel )
-	{
-		Przepis przepis = new Przepis();
-	
-		theModel.addAttribute("przepis", przepis);
-		
-		return "store";
-	}
-	
-	
-	@PostMapping(value = "/receptura")
-	String ProccesPrzepis(Model theModel, @ModelAttribute("przepis") @Valid Przepis przepis
-			, BindingResult result)
-	{
-		
-			if(result.hasErrors()) {
-				
-				log.log(Level.INFO,"Formularz ma bledy ", result.getFieldError());
-			return "store";
-		}
-		
-			log.log(Level.INFO,"Ilosc pizzy "+przepis.getSztuki()+"sztuk \n\n Rodzaju : "+przepis.getRodzaj());
-			
-			Skladniki skladniki = 
-					pizzaRecipteService.wybierz(przepis.getRodzaj(), przepis.getSztuki());
-			
-			
-			if(przepis.getEmail()!=null) {
-						MailBoxForRecipte boxForRecipte = new MailBoxForRecipte(przepis.getEmail(),skladniki.toString());
-			}
-			
-			theModel.addAttribute("skladniki", skladniki);
-		
-		
-		return "store";
-	}
-	
+
+    protected final Logger log = Logger.getLogger(getClass().getName());
+
+    @Autowired
+    PizzaRecipteService pizzaRecipteService;
+
+
+    @RequestMapping(value = "/receptura", method = RequestMethod.GET)
+    String przepis(Model theModel) {
+        Przepis przepis = new Przepis();
+
+        theModel.addAttribute("przepis", przepis);
+
+        return "store";
+    }
+
+
+    @PostMapping(value = "/receptura")
+    String proccesPrzepis(Model theModel, @ModelAttribute("przepis") @Valid Przepis przepis
+            , BindingResult result) {
+
+        if (result.hasErrors()) {
+
+            log.log(Level.INFO, "Formularz ma bledy ", result.getFieldError());
+            return "store";
+        }
+        log.log(Level.INFO, "Ilosc pizzy " + przepis.getSztuki() + "sztuk \n\n Rodzaju : " + przepis.getRodzaj());
+        Skladniki skladniki =
+                pizzaRecipteService.wybierz(przepis.getRodzaj(), przepis.getSztuki());
+
+        if (przepis.getEmail() != null) {
+            MailBoxForRecipte boxForRecipte = new MailBoxForRecipte(przepis.getEmail(), skladniki.toString());
+        }
+
+        theModel.addAttribute("skladniki", skladniki);
+
+
+        return "store";
+    }
+
 
 }

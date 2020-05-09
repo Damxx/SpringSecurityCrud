@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SpringSecurityCrud:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>SpringSecurityCrud</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="spring-security-custom-user-registration-demo.war">
+      <element id="artifact" artifact-name="SpringSecurityCrud:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -47,201 +47,192 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @EnableWebMvc
 @EnableScheduling
 @EnableTransactionManagement
-@ComponentScan(basePackages="springsecurity.demo")
+@ComponentScan(basePackages = "springsecurity.demo")
 @PropertySource("classpath:persistence-mysql.properties")
 public class DemoAppConfig implements WebMvcConfigurer {
 
-	// set up variable to hold the properties
-	@Autowired
-	private Environment env;
-	
-	// set up a logger for diagnostics
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
-	
-	// define a bean for ViewResolver
-	@Bean
-	public ViewResolver viewResolver() {
-		
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		
-		viewResolver.setPrefix("/WEB-INF/view/");
-		viewResolver.setSuffix(".jsp");
-		
+    // set up variable to hold the properties
+    @Autowired
+    private Environment env;
 
-		
-		
-		return viewResolver;
-	}
-	
-	  public void configureDefaultServletHandling(
-		      DefaultServletHandlerConfigurer configurer) {
-		        configurer.enable();
-		    }
-	
-	  @Override
-	   public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    // set up a logger for diagnostics
+    private Logger logger = Logger.getLogger(getClass().getName());
 
-		  registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/statics/", "D:/statics/")
-          .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
-	      
-	      // Register resource handler for images
-	      registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/")
-	            .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
-	      
-	      //register resources for JavaScript
-	      registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/")
-          .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
-	   }
-	// define a bean for our security datasource
-	
-	@Bean
-	public DataSource securityDataSource() {
-		
-		// create connection pool
-		ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
 
-		// set the jdbc driver
-		try {
-			securityDataSource.setDriverClass("com.mysql.jdbc.Driver");		
-		}
-		catch (PropertyVetoException exc) {
-			throw new RuntimeException(exc);
-		}
-		 
-		
-		logger.info("jdbc.url=" + env.getProperty("jdbc.url"));
-		logger.info("jdbc.user=" + env.getProperty("jdbc.user"));
-		
-		// set database connection props
-		securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-		securityDataSource.setUser(env.getProperty("jdbc.user"));
-		securityDataSource.setPassword(env.getProperty("jdbc.password"));
-		
-	
-		
-		// set connection pool props
-		securityDataSource.setInitialPoolSize(
-		getIntProperty("connection.pool.initialPoolSize"));
+    // define a bean for ViewResolver
+    @Bean
+    public ViewResolver viewResolver() {
 
-		securityDataSource.setMinPoolSize(
-				getIntProperty("connection.pool.minPoolSize"));
-		
-		securityDataSource.setMaxPoolSize(
-				getIntProperty("connection.pool.maxPoolSize"));
-		
-		securityDataSource.setMaxIdleTime(
-				getIntProperty("connection.pool.maxIdleTime"));
-				
-		return securityDataSource;
-	}
-	
-	// need a helper method 
-	// read environment property and convert to int
-	
-	private int getIntProperty(String propName) {
-		
-		String propVal = env.getProperty(propName);
-		
-		// now convert to int
-		int intPropVal = Integer.parseInt(propVal);
-		
-		return intPropVal;
-	}
-	
-	private Properties getHibernateProperties() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
-		// set hibernate properties
-		Properties props = new Properties();
+        viewResolver.setPrefix("/WEB-INF/view/");
+        viewResolver.setSuffix(".jsp");
 
-		props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-		props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
-		props.setProperty("hibernate.search.default.directory_provide", "filesystem");
-		props.setProperty("hibernate.search.default.indexBase", "C:/hibernate/lucence/indexes");
-		
-		return props;				
-	}
 
-	
-	@Bean
-	public LocalSessionFactoryBean sessionFactory(){
-		
-		// create session factorys
-		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		
-		// set the properties
-		sessionFactory.setDataSource(securityDataSource());
-		sessionFactory.setPackagesToScan(env.getProperty("hiberante.packagesToScan"));
-		sessionFactory.setHibernateProperties(getHibernateProperties());
-		
+        return viewResolver;
+    }
 
-		
-		return sessionFactory;
-	}
-	
-	
-	   @Bean
-	   public ThemeSource themeSource() {
-	      ResourceBundleThemeSource themeSource = new ResourceBundleThemeSource();
-	      themeSource.setBasenamePrefix("theme/");
-	      return themeSource;
-	   }
+    public void configureDefaultServletHandling(
+            DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 
-	   @Bean
-	   public ThemeResolver themeResolver() {
-	      CookieThemeResolver resolver = new CookieThemeResolver();
-	      resolver.setDefaultThemeName("pulse");
-	      return resolver;
-	   }
-	
-	@Bean
-	@Autowired
-	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-		
-		
-		
-		// setup transaction manager based on session factory
-		HibernateTransactionManager txManager = new HibernateTransactionManager();
-		txManager.setSessionFactory(sessionFactory);
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-		
-		
-		return txManager;
-	}	
-	
-	@Bean("messageSource")
-	   public MessageSource messageSource() {
-		
-		
-	      ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
-	      messageSource.setBasename("classpath:locale/messages");
-	      messageSource.setDefaultEncoding("UTF-8");
-	      messageSource.setUseCodeAsDefaultMessage(true);
-	      return messageSource;
-	   }
-	
-	
-	  @Bean
-	   public LocaleResolver localeResolver() {
-	      CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-	      return localeResolver;
-	   }
-	
+        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/statics/", "D:/statics/")
+                .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
 
-	  
-	  
-	  @Override
-	   public void addInterceptors(InterceptorRegistry registry) {
-	      ThemeChangeInterceptor themeChangeInterceptor = new ThemeChangeInterceptor();
-	      themeChangeInterceptor.setParamName("theme");
-	      registry.addInterceptor(themeChangeInterceptor);
+        // Register resource handler for images
+        registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/")
+                .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
 
-	      LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-	      localeChangeInterceptor.setParamName("lang");
-	      registry.addInterceptor(localeChangeInterceptor);
-	   }
-	
-	
+        //register resources for JavaScript
+        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/")
+                .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
+    }
+    // define a bean for our security datasource
+
+    @Bean
+    public DataSource securityDataSource() {
+
+        // create connection pool
+        ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+
+        // set the jdbc driver
+        try {
+            securityDataSource.setDriverClass("com.mysql.jdbc.Driver");
+        } catch (PropertyVetoException exc) {
+            throw new RuntimeException(exc);
+        }
+
+
+        logger.info("jdbc.url=" + env.getProperty("jdbc.url"));
+        logger.info("jdbc.user=" + env.getProperty("jdbc.user"));
+
+        // set database connection props
+        securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+        securityDataSource.setUser(env.getProperty("jdbc.user"));
+        securityDataSource.setPassword(env.getProperty("jdbc.password"));
+
+
+        // set connection pool props
+        securityDataSource.setInitialPoolSize(
+                getIntProperty("connection.pool.initialPoolSize"));
+
+        securityDataSource.setMinPoolSize(
+                getIntProperty("connection.pool.minPoolSize"));
+
+        securityDataSource.setMaxPoolSize(
+                getIntProperty("connection.pool.maxPoolSize"));
+
+        securityDataSource.setMaxIdleTime(
+                getIntProperty("connection.pool.maxIdleTime"));
+
+        return securityDataSource;
+    }
+
+    // need a helper method
+    // read environment property and convert to int
+
+    private int getIntProperty(String propName) {
+
+        String propVal = env.getProperty(propName);
+
+        // now convert to int
+        int intPropVal = Integer.parseInt(propVal);
+
+        return intPropVal;
+    }
+
+    private Properties getHibernateProperties() {
+
+        // set hibernate properties
+        Properties props = new Properties();
+
+        props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        props.setProperty("hibernate.search.default.directory_provide", "filesystem");
+        props.setProperty("hibernate.search.default.indexBase", "C:/hibernate/lucence/indexes");
+
+        return props;
+    }
+
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+
+        // create session factorys
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+
+        // set the properties
+        sessionFactory.setDataSource(securityDataSource());
+        sessionFactory.setPackagesToScan(env.getProperty("hiberante.packagesToScan"));
+        sessionFactory.setHibernateProperties(getHibernateProperties());
+
+
+        return sessionFactory;
+    }
+
+
+    @Bean
+    public ThemeSource themeSource() {
+        ResourceBundleThemeSource themeSource = new ResourceBundleThemeSource();
+        themeSource.setBasenamePrefix("theme/");
+        return themeSource;
+    }
+
+    @Bean
+    public ThemeResolver themeResolver() {
+        CookieThemeResolver resolver = new CookieThemeResolver();
+        resolver.setDefaultThemeName("pulse");
+        return resolver;
+    }
+
+    @Bean
+    @Autowired
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+
+
+        // setup transaction manager based on session factory
+        HibernateTransactionManager txManager = new HibernateTransactionManager();
+        txManager.setSessionFactory(sessionFactory);
+
+
+        return txManager;
+    }
+
+    @Bean("messageSource")
+    public MessageSource messageSource() {
+
+
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:locale/messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
+    }
+
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+        return localeResolver;
+    }
+
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        ThemeChangeInterceptor themeChangeInterceptor = new ThemeChangeInterceptor();
+        themeChangeInterceptor.setParamName("theme");
+        registry.addInterceptor(themeChangeInterceptor);
+
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("lang");
+        registry.addInterceptor(localeChangeInterceptor);
+    }
+
+
 }
 
 

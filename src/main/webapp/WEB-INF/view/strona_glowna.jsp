@@ -46,10 +46,7 @@
         
         <section id="showcase">
             <div class="container">
-              
-                <h1>Promocja, teraz 2 za 1</h1>
-                 <p>Zamawiajac dzis dostajesz 20 % znizki</p>
-            
+
             </div>
             
         </section>

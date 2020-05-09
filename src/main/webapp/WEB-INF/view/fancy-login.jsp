@@ -30,22 +30,19 @@
 			<div class="panel panel-info">
 
 				<div class="panel-heading">
-					<div class="panel-title">Sign In</div>
+					<div class="panel-title"><p>Sign In wpisz logn:managerx (bedziesz przegladal jako admin) a haslo: damxA@123s</p></div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
 
-					<!-- Login Form -->
-					<form action="${pageContext.request.contextPath}/authenticateTheUser" 
+					<form action="${pageContext.request.contextPath}/authenticateTheUser"
 						  method="POST" class="form-horizontal">
 
-					    <!-- Place for messages: error, alert etc ... -->
 					    <div class="form-group">
 					        <div class="col-xs-15">
 					            <div>
 								
-									<!-- Check for login error -->
-								
+
 									<c:if test="${param.error != null}">
 										
 										<div class="alert alert-danger col-xs-offset-1 col-xs-10">
@@ -68,14 +65,12 @@
 					        </div>
 					    </div>
 
-						<!-- User name -->
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
 							
 							<input type="text" name="username" placeholder="username" class="form-control">
 						</div>
 
-						<!-- Password -->
 						<div style="margin-bottom: 25px" class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span> 
 							

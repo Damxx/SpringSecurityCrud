@@ -24,29 +24,30 @@ import springsecurity.demo.validation.ValidEmail;
 @Controller
 public class MainPage {
 
-	
-	private final Logger log = Logger.getLogger(getClass().getName());
-	
-	@RequestMapping("/")
-	public String showHome(Model theModel) {
-		
-		EasyEmailValid easyEmailValid = new EasyEmailValid();
-		
-		theModel.addAttribute("email", easyEmailValid);
-		
-		return "strona_glowna";
-	}
-	
-	@RequestMapping(value = "/dodaj", method = RequestMethod.GET)
-	public String addEmail(@ModelAttribute(value = "email")  @Valid EasyEmailValid email, BindingResult result) {
-		if(result.hasErrors()) {
-			log.log(Level.WARNING,"Wadliwy email");
-				return "redirect:/";}
-		
-		log.log(Level.WARNING, "Email prawidlowy, wiadomosc wysylana");
-		
-		
-		return "redirect:/";
-	}
-	
+
+    private final Logger log = Logger.getLogger(getClass().getName());
+
+    @RequestMapping("/")
+    public String showHome(Model theModel) {
+
+        EasyEmailValid easyEmailValid = new EasyEmailValid();
+
+        theModel.addAttribute("email", easyEmailValid);
+
+        return "strona_glowna";
+    }
+
+    @RequestMapping(value = "/dodaj", method = RequestMethod.GET)
+    public String addEmail(@ModelAttribute(value = "email") @Valid EasyEmailValid email, BindingResult result) {
+        if (result.hasErrors()) {
+            log.log(Level.WARNING, "Wadliwy email");
+            return "redirect:/";
+        }
+
+        log.log(Level.WARNING, "Email prawidlowy, wiadomosc wysylana");
+
+
+        return "redirect:/";
+    }
+
 }

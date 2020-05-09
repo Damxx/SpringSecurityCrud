@@ -13,27 +13,25 @@ import springsecurity.demo.serviceEmailCycleTime.MailBoxForCron;
 
 @Component
 public class DemoServiceBasicUsageCron {
-	
-	@Autowired
-	UserService userservice;
-	
-	@Autowired
-	MailBoxForCron javaMailUtil;
-	
-	
-	
-	 @Scheduled(cron="30 31 15 * * ?")
-	    public void demoServiceMethod()
-	    {
-		 
-		 
-			java.util.List<Workers_salary> workersList = userservice.getWorkers_salaries();
-			
-			//MailBoxForCron javaMailUtil = new MailBoxForCron(workersList,authentication.getName());
-			
-			javaMailUtil.setEmailParam(workersList,"Mary");
-			
-	        System.out.println("Method executed at 15:30 ");
-	        
-	    }
+
+    @Autowired
+    UserService userservice;
+
+    @Autowired
+    MailBoxForCron javaMailUtil;
+
+
+    @Scheduled(cron = "30 31 15 * * ?")
+    public void demoServiceMethod() {
+
+
+        java.util.List<Workers_salary> workersList = userservice.getWorkers_salaries();
+
+        //MailBoxForCron javaMailUtil = new MailBoxForCron(workersList,authentication.getName());
+
+        javaMailUtil.setEmailParam(workersList, "Mary");
+
+        System.out.println("Method executed at 15:30 ");
+
+    }
 }

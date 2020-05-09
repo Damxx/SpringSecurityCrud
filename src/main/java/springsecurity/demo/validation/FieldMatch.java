@@ -12,25 +12,27 @@ import javax.validation.Payload;
 import springsecurity.demo.validation.FieldMatchValidator;
 
 @Constraint(validatedBy = FieldMatchValidator.class)
-@Target({ ElementType.TYPE, ElementType.ANNOTATION_TYPE })
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface FieldMatch {
-	String message() default "";
-	Class<?>[] groups() default {};
-	Class<? extends Payload>[] payload() default {};
-	
-	
-	// Nazwa przechowywanych elementów, ktore sa poddane walidacji 
-	
-	String first();
+    String message() default "";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+
+
+    // Nazwa przechowywanych elementï¿½w, ktore sa poddane walidacji
+
+    String first();
+
     String secondx();
-    
-    @Target({ ElementType.TYPE, ElementType.ANNOTATION_TYPE })
+
+    @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
-    @interface List
-    {
-    	FieldMatch[] value();
+    @interface List {
+        FieldMatch[] value();
     }
 }
