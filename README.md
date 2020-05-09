@@ -13,6 +13,7 @@ Project based on
 - Spring MVC, Spring Security,
 - Hibernate, 
 - JavaUtiliMail, 
+- Search Engine
 - Cron,
 - Vaildation, 
 - Dictonary (change language),
