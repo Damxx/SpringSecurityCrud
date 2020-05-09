@@ -1,6 +1,6 @@
 
 App have account based on priviliges, I'm sharing one of them
-Right Now I must deployed app on Rasberyy-Pi.environment, page may loading one minute (sorry for this)
+Right Now I had to deployed app on Rasberyy-Pi.environment, page may loading one minute (sorry for this)
 Admin:
 Login: mary
 Password: fun123
