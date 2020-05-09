@@ -1,7 +1,6 @@
 
-App have account based on priviliges, I'm sharing one of them
 Right Now I had to deployed app on Rasberyy-Pi.environment, page may loading one minute (sorry for this)
-Admin:
+App have accounts based on privileges, I'm sharing one of them (ADMIN)
 Login: mary
 Password: fun123
 
