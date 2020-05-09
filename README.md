@@ -1,5 +1,3 @@
-# SpringSecurity_CRUD
-SpringSecurity with CRUD operation and Services 
 
 Istnieje kilka poziomow uprawinien: udostepniam dwa :
 
