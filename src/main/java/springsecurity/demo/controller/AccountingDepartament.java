@@ -50,9 +50,10 @@ public class AccountingDepartament {
     PizzaRecipteService pizzaRecipteService;
 
     @RequestMapping("")
-    public String showbook(Model theModel, @RequestParam(value = "Searchtext", required = false) String Searchtext) {
+    public String showbook(Model theModel, @RequestParam(value = "Searchtext", required = false) String searchtext) {
 
-        if (Searchtext == null) {
+        searchtext = searchtext.trim();
+        if (searchtext.equals("")) {
 
             java.util.List<Workers_salary> workersList = userservice.getWorkers_salaries();
 
@@ -61,11 +62,10 @@ public class AccountingDepartament {
             theModel.addAttribute("liczba_pracownikow", workersList.size());
 
         } else {
-            java.util.List<Workers_salarySearch> theWorkers_salarySearch = userservice.getSearch(Searchtext);
-            log.log(Level.INFO, "Wyszukano ", userservice.getSearch(Searchtext));
+            java.util.List<Workers_salarySearch> theWorkers_salarySearch = userservice.getSearch(searchtext);
+            log.log(Level.INFO, "Wyszukano ", userservice.getSearch(searchtext));
             log.log(Level.INFO, "Liczba elementow znalezionych ", theWorkers_salarySearch.size());
             theModel.addAttribute("workers", theWorkers_salarySearch);
-
             theModel.addAttribute("liczba_pracownikow", theWorkers_salarySearch.size());
         }
         return "ksiegowosc";

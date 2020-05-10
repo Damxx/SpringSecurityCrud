@@ -30,7 +30,7 @@
 			<div class="panel panel-info">
 
 				<div class="panel-heading">
-					<div class="panel-title"><p>Sign In wpisz logn:managerx (bedziesz przegladal jako admin) a haslo: damxA@123s</p></div>
+					<div class="panel-title"><p>Sign In, you can check credentials in my portofilo: https://damxx.github.io/dpadzik.github.io/index.html  </p></div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
